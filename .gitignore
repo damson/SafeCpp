@@ -1,0 +1,8 @@
+*.o
+*.so
+usging
+thread.sublime-project
+thread.sublime-workspace
+using.exe
+bin
+configure
