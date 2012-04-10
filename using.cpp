@@ -2,7 +2,7 @@
 #include "ScopedLock.hpp"
 
 #ifndef	N
-# define	N 200000
+# define	N	200000
 #endif
 
 #ifndef	M
@@ -11,7 +11,7 @@
 
 struct Param
 {
-  Mutex	mutex;
+  Mutex		mutex;
   int		ct;
 };
 
@@ -25,7 +25,7 @@ void	*increment_counter(void *p)
   return (0);
 }
 
-int main()
+int	main()
 {
   pthread_t		tab[M];
   Param			p;
