@@ -23,7 +23,7 @@ public:
   }
 };
 
-  int		ct = 0;
+int   		ct = 0;
 
 class	Cons : public Thread
 {

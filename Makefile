@@ -1,6 +1,6 @@
 NAME_EXE = main
 
-SRC_EXE = main.cpp Thread.cpp
+SRC_EXE = main.cpp Thread.cpp SafeQueue.cpp
 OBJ_EXE = $(SRC_EXE:.cpp=.o)
 
 LDFLAGS += -lpthread

@@ -8,7 +8,7 @@
 class	SafeQueue : public ISafeQueue
 {
 public:
-  SafeQueue() : _finished(false) {}
+  SafeQueue();
   virtual ~SafeQueue(void) {}
   virtual void push(int value);
   virtual bool tryPop(int* value);
@@ -16,8 +16,8 @@ public:
   virtual void setFinished(void);
 
 private:
-  std::queue<int>	_queue;
   bool			_finished;
+  std::queue<int>	_queue;
   Mutex			_mutex;
 };
 

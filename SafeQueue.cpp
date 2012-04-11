@@ -1,6 +1,11 @@
 #include	"ScopedLock.hpp"
 #include	"SafeQueue.hpp"
 
+SafeQueue::SafeQueue() : _finished(false)
+{
+  ;
+}
+
 void		SafeQueue::push(int value)
 {
   ScopedLock	lock(&this->_mutex);

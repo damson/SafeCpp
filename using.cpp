@@ -31,8 +31,6 @@ public:
   
     return (0);
   }
-
-private:
 };
 
 int	main()
