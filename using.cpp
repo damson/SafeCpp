@@ -1,5 +1,6 @@
 #include <iostream>
 #include "ScopedLock.hpp"
+#include "Thread.hpp"
 
 #ifndef	N
 # define	N	200000
@@ -11,41 +12,46 @@
 
 struct Param
 {
-  Mutex		mutex;
   int		ct;
 };
 
-void	*increment_counter(void *p)
+class ThreadUsing : public Thread
 {
-  ScopedLock	sl(&(((Param *)p)->mutex));
+public:
+  ThreadUsing() : Thread() {}
+  ~ThreadUsing() {}
 
-  for (int i = 0; i < N; ++i)
-    ++(((Param *)p)->ct);
+  void	*run()
+  {
+    Param	*p = reinterpret_cast<Param *>(this->arg);
+    mutex.lock();
+    for (int i = 0; i < N; ++i)
+      ++(p->ct);
+    mutex.unlock();
+  
+    return (0);
+  }
 
-  return (0);
-}
+private:
+  Mutex	mutex;
+};
+
 
 int	main()
 {
-  pthread_t		tab[M];
+  ThreadUsing		tab[M];
   Param			p;
 
   p.ct = 0;
   for (int i = 0; i < M; ++i) {
-    if (pthread_create(&(tab[i]), 0, &increment_counter, &p)) {
-      std::cerr << "Error: thread creation" << std::endl;
-      throw std::exception();
-    }
+    tab[i].start(&p);
   }
 
   for (int i = 0; i < M; ++i) {
-    pthread_join(tab[i], 0);
+    tab[i].join();
   }
 
   std::cout << "Counter: " << p.ct << std::endl;
-
-  for (int i = 0; i < M; ++i)
-    pthread_exit(&(tab[i]));
 
   return 0;
 }
