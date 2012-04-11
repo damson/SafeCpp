@@ -1,7 +1,7 @@
 #ifndef SCOPED_LOCK_HPP
 # define	SCOPED_LOCK_HPP
 
-#include "Mutex.hpp"
+#include	"Mutex.hpp"
 
 class ScopedLock
 {
@@ -16,6 +16,8 @@ public:
 private:
   Mutex	*_mutex;
 
+private:
+  ScopedLock() {}
   ScopedLock(ScopedLock const&) {}
   ScopedLock &	operator=(ScopedLock const&) { return (*this);}
 };
