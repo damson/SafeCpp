@@ -1,12 +1,18 @@
+#include	"ScopedLock.hpp"
 #include	"SafeQueue.hpp"
 
 void		SafeQueue::push(int value)
 {
-  this->_queue.push(value);
+  ScopedLock	lock(&this->_mutex);
+
+  if (!this->_finished)
+    this->_queue.push(value);
 }
 
 bool		SafeQueue::tryPop(int *value)
 {
+  ScopedLock	lock(&this->_mutex);
+
   if (!this->_queue.empty())
     {
       *value = this->_queue.front();
@@ -18,7 +24,7 @@ bool		SafeQueue::tryPop(int *value)
 
 bool		SafeQueue::isFinished()
 {
-  if (this->_finished && this->queue.empty())
+  if (this->_finished && this->_queue.empty())
     return true;
   return false;
 }

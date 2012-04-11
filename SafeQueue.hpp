@@ -1,6 +1,8 @@
 #ifndef	SAFEQUEUE_HPP_
 # define	SAFEQUEUE_HPP_
 
+#include	<queue>
+
 class	SafeQueue
 {
 public:
@@ -14,6 +16,7 @@ public:
 private:
   std::queue<int>	_queue;
   bool			_finished;
+  Mutex			_mutex;
 };
 
 #endif
