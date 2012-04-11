@@ -1,4 +1,5 @@
 #include <iostream>
+#include "CondVar.hpp"
 #include "ScopedLock.hpp"
 #include "Thread.hpp"
 
@@ -36,6 +37,7 @@ public:
 int	main()
 {
   ThreadUsing		tab[M];
+  CondVar		cond;
   Param			p;
 
   p.ct = 0;

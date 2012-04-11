@@ -18,7 +18,7 @@ Thread::~Thread()
   pthread_exit(&this->_id);
 }
 
-void		Thread::start(void *arg)
+void			Thread::start(void *arg)
 {
   this->arg = arg;
 
@@ -29,11 +29,16 @@ void		Thread::start(void *arg)
   this->_state = RUNNABLE;
 }
 
-void		Thread::join(void)
+void			Thread::join(void)
 {
   if (pthread_join(this->_id, 0))
     std::cerr << "Error: thread join" << std::endl;
   this->_state = TERMINATED;
+}
+
+pthread_t const&	Thread::getId(void) const
+{
+  return (this->_id);
 }
 
 Thread::e_TState	Thread::getState(void) const
@@ -41,7 +46,7 @@ Thread::e_TState	Thread::getState(void) const
   return (this->_state);
 }
 
-void		*Thread::exec(void *thread)
+void			*Thread::exec(void *thread)
 {
   return ((reinterpret_cast<Thread *>(thread))->run());
 }

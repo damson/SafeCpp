@@ -8,23 +8,28 @@ class Mutex : public IMutex
 {
 public:
   Mutex() {
-    pthread_mutex_init(&this->mutex, 0);
+    pthread_mutex_init(&this->_mutex, 0);
   }
   virtual ~Mutex() {
-    pthread_mutex_destroy(&this->mutex);
+    pthread_mutex_destroy(&this->_mutex);
   }
   virtual void	lock() {
-    pthread_mutex_lock(&this->mutex);
+    pthread_mutex_lock(&this->_mutex);
   }
   virtual void	unlock() {
-    pthread_mutex_unlock(&this->mutex);
+    pthread_mutex_unlock(&this->_mutex);
   }
   virtual bool	trylock() {
-    return (pthread_mutex_trylock(&this->mutex));
+    return (pthread_mutex_trylock(&this->_mutex));
   }
 
-private:
-  pthread_mutex_t	mutex;
+protected:
+  pthread_mutex_t	_mutex;
+
+// NonCopyable
+protected:
+  Mutex(Mutex const&) {}
+  Mutex &operator=(Mutex const&) { return (*this); }
 };
 
 #endif

@@ -17,8 +17,9 @@ public:
   Thread(pthread_attr_t *);
   virtual ~Thread();
 
-  void			start(void *arg);
+  void			start(void *arg = 0);
   void			join(void);
+  pthread_t const&	getId(void) const;
   e_TState		getState(void) const;
   virtual void		*run(void) = 0;
 
