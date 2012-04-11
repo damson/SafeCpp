@@ -1,6 +1,6 @@
-NAME_EXE = using
+NAME_EXE = main
 
-SRC_EXE = using.cpp Thread.cpp
+SRC_EXE = main.cpp Thread.cpp
 OBJ_EXE = $(SRC_EXE:.cpp=.o)
 
 LDFLAGS += -lpthread

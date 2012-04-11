@@ -2,12 +2,14 @@
 # define	SAFEQUEUE_HPP_
 
 #include	<queue>
+#include	"ISafeQueue.hpp"
+#include	"Mutex.hpp"
 
-class	SafeQueue
+class	SafeQueue : public ISafeQueue
 {
 public:
-  SafeQueue() : _finished(false) {};
-  virtual ~SafeQueue(void) {};
+  SafeQueue() : _finished(false) {}
+  virtual ~SafeQueue(void) {}
   virtual void push(int value);
   virtual bool tryPop(int* value);
   virtual bool isFinished(void);
