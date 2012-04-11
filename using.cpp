@@ -13,6 +13,7 @@
 struct Param
 {
   int		ct;
+  Mutex		mutex;
 };
 
 class ThreadUsing : public Thread
@@ -23,19 +24,16 @@ public:
 
   void	*run()
   {
-    Param	*p = reinterpret_cast<Param *>(this->arg);
-    mutex.lock();
+    Param *p = reinterpret_cast<Param *>(this->arg);
+    ScopedLock lock(&p->mutex);
     for (int i = 0; i < N; ++i)
       ++(p->ct);
-    mutex.unlock();
   
     return (0);
   }
 
 private:
-  Mutex	mutex;
 };
-
 
 int	main()
 {
