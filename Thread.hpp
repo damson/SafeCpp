@@ -4,12 +4,21 @@
 class Thread
 {
 public:
+	enum e_TState
+	  {
+            NEW,
+            RUNNABLE,
+            TERMINATED
+	  };
+
+public:
   // maybe one specific constructor to set attributes 
-  Thread() {}
+  Thread() : _state(NEW) {  }
   virtual ~Thread();
 
   void			start(void *arg);
   void			join(void);
+  e_TState		getState(void) const;
   virtual void		*run(void) = 0;
 
 protected:
@@ -19,6 +28,7 @@ protected:
 private:
   pthread_t		_id;		// thread id
   pthread_attr_t	_attr;		// thread attributes
+  e_TState		_state;
 
 // NonCopyable
 private:

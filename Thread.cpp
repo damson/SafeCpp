@@ -19,6 +19,11 @@ void		Thread::join(void)
   pthread_join(this->_id);
 }
 
+e_TState	Thread::getState(void)
+{
+  return (this->_state);
+}
+
 void		*Thread::exec(void *thread)
 {
   return ((reinterpret_cast<Thread *>(thread))->run());
