@@ -1,13 +1,12 @@
 NAME_EXE = using
 
-SRC_EXE = using.cpp
+SRC_EXE = using.cpp Thread.cpp
 OBJ_EXE = $(SRC_EXE:.cpp=.o)
 
 LDFLAGS += -lpthread
 CXXFLAGS += -W -Wall -Wextra
 
 CXX = g++
-
 
 all: $(NAME_EXE)
 
