@@ -1,17 +1,17 @@
 #ifndef	THREADPOOL_HPP__
 # define	THREADPOOL_HPP__
 
-#include	<iostream>
+# include	<iostream>
 
 # include	"SafeQueue.hpp"
 
 class Task
 {
 public:
-  virtual ~Task();
+  virtual ~Task() {}
   virtual void		toRun() = 0;
-  std::string const&    getName() const;
-  unsigned int          getId() const;
+  std::string const&    getName() const { return (this->_name); }
+  unsigned int          getId() const { return (this->_id); }
 
 private:
   unsigned int		_id;
@@ -34,9 +34,13 @@ public:
   unsigned int		getPoolSize() const;
 
 private:
-  SafeQueue<Task *>	_tasks;
+  SafeQueue<Task *>	_tasks();
   int			_nbThread;
   int			_remainingTask;
+
+private:
+  ThreadPool(ThreadPool const&) {}
+  ThreadPool	&operator=(ThreadPool const&) { return (*this); }
 };
 
 #endif	/* !THREADPOOL_HPP__ */
