@@ -10,6 +10,8 @@ class Task
 public:
   virtual ~Task();
   virtual void		toRun() = 0;
+  std::string const&    getName() const;
+  unsigned int          getId() const;
 
 private:
   unsigned int		_id;
@@ -33,7 +35,7 @@ public:
 
 private:
   SafeQueue<Task *>	_tasks;
-  int			_maxThread;
+  int			_nbThread;
   int			_remainingTask;
 };
 
