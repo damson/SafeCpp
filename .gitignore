@@ -2,6 +2,7 @@
 *.so
 a.out
 using
+main
 thread.sublime-project
 thread.sublime-workspace
 using.exe

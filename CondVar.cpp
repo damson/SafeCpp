@@ -2,7 +2,8 @@
 
 CondVar::CondVar() : Mutex(), _attr(0)
 {
-  pthread_cond_init(&this->_cond, this->_attr);
+  if (pthread_cond_init(&this->_cond, this->_attr))
+    std::cerr << "Error: cond init" << std::endl;
 }
 
 CondVar::CondVar(pthread_condattr_t *attr) : Mutex(), _attr(attr) {
