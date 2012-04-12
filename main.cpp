@@ -8,8 +8,8 @@ Mutex	cout_mutex;
 class	Prod : public Thread
 {
 public:
-  static const	int	NB_PRODUCT = 10;
-  static const	int	PRODUCTS = 100;
+  static const	int	NB_PRODUCT	= 10;
+  static const	int	PRODUCTS	= 100;
 
 private:
   static int		ct;
@@ -23,7 +23,7 @@ public:
   void		*run()
   {
     int		tmp = 0;
-    SafeQueue	*queue = reinterpret_cast<SafeQueue *>(this->arg);
+    SafeQueue<int>	*queue = reinterpret_cast<SafeQueue<int> *>(this->arg);
 
     for (int i = 0; !queue->isFinished() && i < Prod::NB_PRODUCT; ++i)
     {
@@ -64,7 +64,7 @@ public:
   void		*run()
   {
     int		tmp = 0;
-    SafeQueue	*queue = reinterpret_cast<SafeQueue *>(this->arg);
+    SafeQueue<int>	*queue = reinterpret_cast<SafeQueue<int> *>(this->arg);
 
     while (!queue->isFinished())
       {
@@ -101,7 +101,7 @@ int		main()
 {
   srand(time(0));
 
-  SafeQueue	queue;
+  SafeQueue<int>	queue;
   Prod		*prod = new Prod;
   Cons		*cons = new Cons;
 

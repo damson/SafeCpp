@@ -1,12 +1,14 @@
 #include	"ScopedLock.hpp"
 #include	"SafeQueue.hpp"
 
-SafeQueue::SafeQueue() : _finished(false)
+template <typename Type>
+SafeQueue<Type>::SafeQueue() : _finished(false)
 {
   ;
 }
 
-void		SafeQueue::push(int value)
+template <typename Type>
+void		SafeQueue<Type>::push(Type value)
 {
   ScopedLock	lock(&this->_mutex);
 
@@ -14,7 +16,8 @@ void		SafeQueue::push(int value)
     this->_queue.push(value);
 }
 
-bool		SafeQueue::tryPop(int *value)
+template <typename Type>
+bool		SafeQueue<Type>::tryPop(Type *value)
 {
   ScopedLock	lock(&this->_mutex);
 
@@ -22,19 +25,27 @@ bool		SafeQueue::tryPop(int *value)
     {
       *value = this->_queue.front();
       this->_queue.pop();
-      return true;
+      return (true);
     }
-  return false;
+  return (false);
 }
 
-bool		SafeQueue::isFinished()
+template <typename Type>
+bool		SafeQueue<Type>::isFinished()
 {
   if (this->_finished && this->_queue.empty())
-    return true;
-  return false;
+    return (true);
+  return (false);
 }
 
-void		SafeQueue::setFinished()
+template <typename Type>
+void		SafeQueue<Type>::setFinished()
 {
   this->_finished = true;
 }
+
+template SafeQueue<int>::SafeQueue();
+template void    SafeQueue<int>::push(int value);
+template bool    SafeQueue<int>::tryPop(int *value);
+template bool    SafeQueue<int>::isFinished();
+template void    SafeQueue<int>::setFinished();
