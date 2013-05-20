@@ -1,3 +1,0 @@
-dependences:
-
-	- lib pthread
