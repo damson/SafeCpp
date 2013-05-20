@@ -1,34 +1,59 @@
 NAME_EXE = main
 
-SRC_EXE =	main.cpp
-		Thread.cpp
-		SafeQueue.cpp
-		CondVar.cpp
-		ThreadPool.cpp
-		SafeCerr.cpp
-		SafeCout.cpp
-		Exception.cpp
 
-OBJ_EXE = $(SRC_EXE:.cpp=.o)
+SOURCES		=	main.cpp		\
+			CondVar.cpp		\
+			ThreadPool.cpp		\
+			Mutex.cpp		\
+			SafeQueue.cpp		\
+			Task.cpp		\
+			Exception.cpp		\
+			SafeCout.cpp		\
+			SafeCerr.cpp		\
+			Thread.cpp
 
-LDFLAGS += -lpthread
-CXXFLAGS += -W -Wall -Wextra
+SRCDIR		=	src/
+INCDIR		=	include/
+LIBDIR		=	lib/
+BINDIR		=	bin/
 
-CXX = g++
+CXXFLAGS	=	-W -Wall -Wextra
+LDFLAGS		=	-pthread -lrt
+OPTFLAGS	=
+INCFLAGS	=	-I $(INCDIR)
 
-all: $(NAME_EXE)
+SRCS		=	$(addprefix $(SRCDIR),$(SOURCES))
+OBJS		=	$(SRCS:.cpp=.o)
 
+CXX		=	g++
+CP		=	@cp
+FIND		=	@find
+MD		=	@mkdir -p
+RM		=	rm -fr
 
-$(NAME_EXE): $(OBJ_EXE)
-	$(CXX) -o $(NAME_EXE) $(OBJ_EXE) $(LDFLAGS)
+MAKE		=	@make
 
+%.o:			%.cpp
+			$(CXX) $(CXXFLAGS) $(INCFLAGS) $(OPTFLAGS) -c $< -o $@
+
+all:			$(NAME)
+
+$(NAME):		$(OBJS)
+			$(MD) $(BINDIR)
+			$(CXX) $(LDFLAGS) $(OBJS) -o $(NAME)
+			$(CP) $(NAME) $(BINDIR)
+
+genLib:
+			$(MAKE) -C $(LIBDIR) all
 
 clean:
-	rm -f $(OBJ_LIB) $(OBJ_EXE)
+			$(RM) $(OBJS)
+			$(RM) $(BINDIR)
+			$(FIND) . -name "*~" -delete -print
 
+fclean:			clean
+			$(RM) $(NAME)
 
-fclean: clean
-	rm -f $(NAME_EXE) $(NAME_LIB)
+re:			fclean all
 
-
-re: fclean all
+.PHONY:			all clean fclean re
